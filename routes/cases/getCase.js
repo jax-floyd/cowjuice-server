@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const filePath = path.join(__dirname, 'cases.txt');
+const filePath = path.join(__dirname, '../../cases.txt');
 
 const setupGetCase = (router) => {
   router.get('/get-case', async (req, res) => {
