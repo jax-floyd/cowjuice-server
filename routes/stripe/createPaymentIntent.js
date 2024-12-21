@@ -3,6 +3,7 @@ const stripe = require('../../configs/stripe.js'); // Import Stripe configuratio
 const setupCreatePaymentIntentRoute = (router) => {
   // Route to handle creating a payment intent
   router.post('/create-payment-intent', async (req, res) => {
+    console.log("'/create-payment-intent' endpoint was reached.")
     try {
       const { amount, email } = req.body;
 
