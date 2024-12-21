@@ -2,16 +2,18 @@ const express = require('express');
 
 // The routes, themselves ...
 const setupHomeRoute = require('./home.js');
-const setupTestRoute = require('./test.js');
-const setupCreatePaymentIntentRoute = require('./stripe/createPaymentIntent.js'); // Add this import
+const setupCreatePaymentIntentRoute = require('./stripe/createPaymentIntent.js');
+const setupGetCase = require('./cases/getCase.js');
+const setupDecrementCase = require('./cases/decrementCase.js');
 
 const router = express.Router();
 
 // Our initiation function ...
 const setupRoutes = (app) => {
-  setupHomeRoute(router); // Set up home route
-  setupTestRoute(router); // Set up test route
-  setupCreatePaymentIntentRoute(router); // Register the create payment intent route
+  setupHomeRoute(router);
+  setupCreatePaymentIntentRoute(router);
+  setupGetCase(router);
+  setupDecrementCase(router);
 
   return router;
 };
