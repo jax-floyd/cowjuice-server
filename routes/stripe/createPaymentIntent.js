@@ -18,7 +18,7 @@ const setupCreatePaymentIntentRoute = (router) => {
         currency: 'usd', // Specify your currency
         metadata: { email }, // Attach the email to the metadata
         automatic_payment_methods: { enabled: true },
-        payment_method_types: ['card', 'applePay']
+        // payment_method_types: ['card', 'applePay']
       });
 
       // Respond with the client secret from Stripe
