@@ -24,7 +24,8 @@ const setupCreatePaymentIntentRoute = (router) => {
       // Respond with the client secret from Stripe
       res.status(200).json({
         clientSecret: paymentIntent.client_secret,
-        paymentIntentId: paymentIntent.id
+        paymentIntentId: paymentIntent.id,
+        paymentIntentStatus: paymentIntent.status
       });
 
     } catch (error) {
