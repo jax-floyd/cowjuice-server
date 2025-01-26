@@ -6,6 +6,7 @@ const setupCreatePaymentIntentRoute = require('./stripe/createPaymentIntent.js')
 const setupGetCase = require('./cases/getCase.js');
 const setupDecrementCase = require('./cases/decrementCase.js');
 const setupIncrementCase = require('./cases/incrementCase.js');
+const setupWriteZip = require('./data/writeZip.js');
 
 const router = express.Router();
 
@@ -16,6 +17,7 @@ const setupRoutes = (app) => {
   setupGetCase(router);
   setupDecrementCase(router);
   setupIncrementCase(router);
+  setupWriteZip(router);
 
   return router;
 };
