@@ -9,7 +9,7 @@ const setupWriteZip = (router) => {
     try {
       console.log(req.body); // Logs the body for debugging
       // Write the ZIP to the file
-      await fs.promises.writeFile(filePath, req.body.zip.toString(), 'utf8');
+      await fs.promises.appendFile(filePath, req.body.zip.toString() + '\n', 'utf8');
       return res.json({ status: 'success' });
       
     } catch (error) {
