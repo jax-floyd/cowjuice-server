@@ -11,6 +11,10 @@ const setupListCustomers = (router) => {
         limit
       });
 
+      console.log(customers)
+      console.log(customers.data)
+      console.log(customers.data.length)
+
       res.status(200).json({
         customers: customers.data
       });
