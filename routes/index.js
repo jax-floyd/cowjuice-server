@@ -8,6 +8,7 @@ const setupDecrementCase = require('./cases/decrementCase.js');
 const setupIncrementCase = require('./cases/incrementCase.js');
 const setupWriteZip = require('./data/writeZip.js');
 const setupListCharges = require('./stripe/listCharges.js');
+const setupListCustomers = require('./stripe/listCustomers.js');
 
 const router = express.Router();
 
@@ -20,6 +21,7 @@ const setupRoutes = (app) => {
   setupIncrementCase(router);
   setupWriteZip(router);
   setupListCharges(router);
+  setupListCustomers(router);
 
   return router;
 };

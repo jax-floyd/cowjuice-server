@@ -5,10 +5,10 @@ const setupListCharges = (router) => {
   router.post('/list-charges', async (req, res) => {
     console.log("'/list-charges' endpoint was reached.");
     try {
-      const { } = req.body;
+      const { limit = 100 } = req.body;
 
       const charges = await stripe.charges.list({
-        
+        limit
       });
 
       res.status(200).json({
