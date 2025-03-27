@@ -11,6 +11,8 @@ const setupListCharges = (router) => {
         limit
       });
 
+      console.log(charges)
+
       res.status(200).json({
         charges: charges.data
       });
