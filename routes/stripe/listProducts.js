@@ -8,9 +8,10 @@ const setupListProducts = (router) => {
       const { limit = 100 } = req.body; /// <-- We want all of 'em.
 
       const products = await stripe.products.list({
-        limit
+        limit,
+        expand: ['price']
       });
-
+      
       res.status(200).json({
         products: products.data
       });
