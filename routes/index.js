@@ -10,6 +10,7 @@ const setupWriteZip = require('./data/writeZip.js');
 const setupListCharges = require('./stripe/listCharges.js');
 const setupListCustomers = require('./stripe/listCustomers.js');
 const setupCreateCustomer = require('./stripe/createCustomer.js');
+const setupListProducts = require('./stripe/listProducts.js')
 
 const router = express.Router();
 
@@ -24,6 +25,7 @@ const setupRoutes = (app) => {
   setupListCharges(router);
   setupListCustomers(router);
   setupCreateCustomer(router);
+  setupListProducts(router);
 
   return router;
 };
