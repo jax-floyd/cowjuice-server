@@ -9,9 +9,9 @@ const setupListProducts = (router) => {
 
       const products = await stripe.products.list({
         limit,
-        expand: ['price']
+        expand: ['data.price']
       });
-      
+
       res.status(200).json({
         products: products.data
       });
