@@ -9,7 +9,7 @@ const setupListProducts = (router) => {
 
       const products = await stripe.products.list({
         limit,
-        expand: ['data.price']
+        expand: ['data.default_price']
       });
     
       console.log(products);
