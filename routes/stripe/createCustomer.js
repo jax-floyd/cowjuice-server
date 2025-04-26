@@ -14,7 +14,7 @@ const setupCreateCustomer = (router) => {
 
       console.log(req.body);
 
-      const customer = await stripe.customer.create({
+      const customer = await stripe.customers.create({
         name: firstName + ' ' + lastName,
         email: email,
       });
