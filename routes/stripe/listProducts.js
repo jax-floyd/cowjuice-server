@@ -11,6 +11,8 @@ const setupListProducts = (router) => {
         limit,
         expand: ['data.price']
       });
+    
+      console.log(products);
 
       res.status(200).json({
         products: products.data
