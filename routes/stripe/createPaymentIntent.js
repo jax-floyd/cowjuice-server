@@ -21,6 +21,8 @@ const setupCreatePaymentIntentRoute = (router) => {
         // payment_method_types: ['card', 'applePay']
       });
 
+      console.log(paymentIntent)
+
       // Respond with the client secret from Stripe
       res.status(200).json({
         clientSecret: paymentIntent.client_secret,
