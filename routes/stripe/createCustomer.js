@@ -10,11 +10,17 @@ const setupCreateCustomer = (router) => {
             first: firstName,
             last: lastName,
         },
+        metadata: {
+          cowjuice_id: cowjuiceId
+        }
       } = req.body;
       
       const customer = await stripe.customers.create({
         name: firstName + ' ' + lastName,
         email: email,
+        metadata: {
+          cowjuice_id: cowjuiceId,
+        },
       });
 
       res.status(200).json({
