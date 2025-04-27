@@ -12,8 +12,6 @@ const setupListProducts = (router) => {
         expand: ['data.default_price']
       });
     
-      console.log(products);
-
       res.status(200).json({
         products: products.data
       });
