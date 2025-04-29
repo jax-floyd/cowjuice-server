@@ -5,7 +5,7 @@ const setupSearchCustomers = (router) => {
     console.log("'/search-customers' endpoint was reached.");
     try {
       const {
-        email: email
+        email
       } = req.body;
 
       console.log(req.body)
