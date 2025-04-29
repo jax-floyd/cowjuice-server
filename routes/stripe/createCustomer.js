@@ -4,6 +4,7 @@ const setupCreateCustomer = (router) => {
   router.post('/create-customer', async (req, res) => {
     console.log("'/create-customer' endpoint was reached.");
     try {
+      console.log(req.body)
       // Destructure data from the request body
       const {
         email,
@@ -11,7 +12,7 @@ const setupCreateCustomer = (router) => {
           first: firstName, 
           last: lastName 
         },
-        metadata: { 
+        metadata: {
           cowjuice_id: cowjuiceId 
         },
         shipping: {
