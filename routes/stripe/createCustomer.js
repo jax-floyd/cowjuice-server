@@ -33,7 +33,7 @@ const setupCreateCustomer = (router) => {
         // If a customer exists with this email, notify the user
         console.log('there is a customer under that email:')
         console.log(existingCustomerByEmail.data[0]);
-        return res.status(400).json({
+        return res.json({
           message: 'A customer with this email already exists. Please log in or use a different email.',
           customer: existingCustomerByEmail.data[0], // <-- We return the existing customer to be able to display to end user and check if it's them.
         });
