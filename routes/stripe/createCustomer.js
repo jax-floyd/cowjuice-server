@@ -32,7 +32,7 @@ const setupCreateCustomer = (router) => {
           cowjuice_id: cowjuiceId, // Optional metadata field for identification
         },
         shipping: {
-          name: `${firstName} ${lastName}`, // Full name for shipping
+          name: `${first} ${last}`, // Full name for shipping
           address: {
             line1: address1,
             line2: address2 || '', // Optional address line 2
