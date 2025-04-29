@@ -1,19 +1,18 @@
 const stripe = require('../../configs/stripe.js'); // Import Stripe configuration
 
 const setupSearchCustomers = (router) => {
-  router.post('/search-customer', async (req, res) => {
-    console.log("'/search-customer' endpoint was reached.");
+  router.post('/search-customers', async (req, res) => {
+    console.log("'/search-customers' endpoint was reached.");
     try {
       const {
-        email: email,
-        metadata: {
-          cowjuice_id: cowjuiceId
-        }
+        email: email
       } = req.body;
       
       const customer = await stripe.customers.search({
-        query: `email: '${email}' AND metadata['cowjuice_id']: '${cowjuiceId}'`,
+        query: `email: '${email}'`,
       });
+
+      console.log(customer);
 
       res.status(200).json({
         status: 'success',
