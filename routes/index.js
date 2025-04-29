@@ -11,6 +11,7 @@ const setupListCharges = require('./stripe/listCharges.js');
 const setupListCustomers = require('./stripe/listCustomers.js');
 const setupCreateCustomer = require('./stripe/createCustomer.js');
 const setupListProducts = require('./stripe/listProducts.js')
+const setupListTransactions = require('./stripe/listTransactions.js');
 
 const router = express.Router();
 
@@ -26,6 +27,7 @@ const setupRoutes = (app) => {
   setupListCustomers(router);
   setupCreateCustomer(router);
   setupListProducts(router);
+  setupListTransactions(router);
 
   return router;
 };
