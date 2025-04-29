@@ -34,11 +34,11 @@ const setupCreateCustomer = (router) => {
         return res.status(400).json({
           status: 'error',
           message: 'A customer with this email already exists. Please log in or use a different email.',
-          customer: existingCustomerByEmail.data[0], // Optionally return existing customer data
+          customer: existingCustomerByEmail.data[0], // <-- We return the existing customer to be able to display to end user and check if it's them.
         });
       }
 
-      // Create a new customer in Stripe with shipping address
+      // Step 2. If new email, create a new customer in Stripe with shipping address
       const customer = await stripe.customers.create({
         email: email, 
         name: `${first} ${last}`,
