@@ -7,13 +7,11 @@ const setupCreateCustomer = (router) => {
       console.log(req.body)
       // Destructure data from the request body
       const {
+        cowjuiceId,
         email,
         name: { 
-          first: firstName, 
-          last: lastName 
-        },
-        metadata: {
-          cowjuice_id: cowjuiceId 
+          first, 
+          last, 
         },
         shipping: {
           address1,
@@ -29,7 +27,7 @@ const setupCreateCustomer = (router) => {
       // Create a new customer in Stripe with shipping address
       const customer = await stripe.customers.create({
         email: email, 
-        name: `${firstName} ${lastName}`,
+        name: `${first} ${last}`,
         metadata: {
           cowjuice_id: cowjuiceId, // Optional metadata field for identification
         },
