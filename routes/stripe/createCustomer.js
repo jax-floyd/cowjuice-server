@@ -23,11 +23,15 @@ const setupCreateCustomer = (router) => {
         }
       } = req.body;
 
+      console.log(req.body);
+
       // Step 1: Search for an existing customer by email using Stripe's search API
       const existingCustomerByEmail = await stripe.customers.search({
         query: `email:'${email}'`,
         limit: 1,
       });
+
+      console.log(existingCustomerByEmail);
 
       if (existingCustomerByEmail.data.length > 0) {
         // If a customer exists with this email, notify the user
