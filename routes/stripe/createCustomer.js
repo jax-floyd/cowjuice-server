@@ -4,34 +4,62 @@ const setupCreateCustomer = (router) => {
   router.post('/create-customer', async (req, res) => {
     console.log("'/create-customer' endpoint was reached.");
     try {
+      // Destructure data from the request body
       const {
-        email: email,
-        name: {
-            first: firstName,
-            last: lastName,
+        email,
+        name: { 
+          first: firstName, 
+          last: lastName 
         },
-        metadata: {
-          cowjuice_id: cowjuiceId
+        metadata: { 
+          cowjuice_id: cowjuiceId 
+        },
+        shipping: {
+          address1,
+          address2,
+          city,
+          state,
+          postalCode,
+          country,
+          phone,
         }
       } = req.body;
-      
+
+      // Create a new customer in Stripe with shipping address
       const customer = await stripe.customers.create({
-        name: firstName + ' ' + lastName,
-        email: email,
+        email: email, 
+        name: `${firstName} ${lastName}`,
         metadata: {
-          cowjuice_id: cowjuiceId,
+          cowjuice_id: cowjuiceId, // Optional metadata field for identification
         },
+        shipping: {
+          name: `${firstName} ${lastName}`, // Full name for shipping
+          address: {
+            line1: address1,
+            line2: address2 || '', // Optional address line 2
+            city: city,
+            state: state,
+            postal_code: postalCode,
+            country: country, // Ensure this is the two-letter country code if required
+          },
+          phone: phone || '', // Optional phone number for shipping
+        }
       });
 
+      // Respond with success and customer details
       res.status(200).json({
         status: 'success',
-        customerId: customer.id,
-        customer,
+        customerId: customer.id, // Return the customer ID for the front-end
+        customer, // Return the full customer object including the shipping info
       });
-
     } catch (error) {
       console.error('Error creating customer:', error);
-      res.status(500).json({ error: 'Failed to create customer' });
+
+      // Send an error response with a detailed message
+      res.status(500).json({
+        error: 'Failed to create customer',
+        message: error.message || 'Unknown error occurred',
+      });
     }
   });
 };
