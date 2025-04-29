@@ -4,23 +4,11 @@ const setupCreateCustomer = (router) => {
   router.post('/create-customer', async (req, res) => {
     console.log("'/create-customer' endpoint was reached.");
     try {
-      // Destructure data from the request body
       const {
         cowjuiceId,
         email,
-        name: { 
-          first, 
-          last, 
-        },
-        shipping: {
-          address1,
-          address2,
-          city,
-          state,
-          postalCode,
-          country,
-          phone,
-        }
+        name: { first, last },
+        shipping: { address1, address2, city, state, postalCode, country, phone },
       } = req.body;
 
       // Step 1: Search for an existing customer by email using Stripe's search API
@@ -29,16 +17,25 @@ const setupCreateCustomer = (router) => {
         limit: 1,
       });
 
+      console.log("Stripe response from search:", existingCustomerByEmail);
+
       if (existingCustomerByEmail.data.length > 0) {
-        // If a customer exists with this email, notify the user
-        console.log('there is a customer under that email:')
-        res.status(400).json({
+        // If a customer exists with this email, log and notify the user
+        console.log('There is a customer under that email:');
+        console.log(existingCustomerByEmail.data[0]);
+
+        // Log the response structure and customer data before returning
+        const existingCustomer = existingCustomerByEmail.data[0];
+        console.log("Existing Customer to be sent back:", existingCustomer);
+
+        // Ensure the response is sent only once
+        return res.status(400).json({
           message: 'A customer with this email already exists. Please log in or use a different email.',
-          customer: existingCustomerByEmail.data[0], // <-- We return the existing customer to be able to display to end user and check if it's them.
+          customer: existingCustomer, // <-- Send back the existing customer object
         });
       }
 
-      // Step 2. If new email, create a new customer in Stripe with shipping address
+      // Step 2: If no customer exists with this email, create a new customer in Stripe with shipping address
       const customer = await stripe.customers.create({
         email: email, 
         name: `${first} ${last}`,
@@ -59,17 +56,20 @@ const setupCreateCustomer = (router) => {
         }
       });
 
-      // Respond with success and customer details
-      res.status(200).json({
+      // Log the newly created customer object before sending
+      console.log("Newly Created Customer:", customer);
+
+      // Respond with success and the newly created customer details
+      return res.status(200).json({
         status: 'success',
         customerId: customer.id, // Return the customer ID for the front-end
-        customer, // Return the full customer object including the shipping info
+        customer, // Return the full customer object including shipping info
       });
     } catch (error) {
       console.error('Error creating customer:', error);
 
       // Send an error response with a detailed message
-      res.status(500).json({
+      return res.status(500).json({
         error: 'Failed to create customer',
         message: error.message || 'Unknown error occurred',
       });
