@@ -17,7 +17,7 @@ const setupSearchCustomers = require('./stripe/searchCustomers.js')
 const router = express.Router();
 
 // Our initiation function ...
-const setupRoutes = (app) => {
+const setupRoutes = ( app ) => {
   setupHomeRoute(router);
   setupCreatePaymentIntentRoute(router);
   setupGetCase(router);
