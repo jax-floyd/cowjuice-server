@@ -7,6 +7,8 @@ const setupSearchCustomers = (router) => {
       const {
         email: email
       } = req.body;
+
+      console.log(req.body)
       
       const customer = await stripe.customers.search({
         query: `email: '${email}'`,
