@@ -1,27 +1,47 @@
-const stripe = require('../../configs/stripe.js'); // Import Stripe configuration
+const stripe = require('../../configs/stripe.js');
 
 const setupCreatePaymentIntentRoute = (router) => {
-  // Route to handle creating a payment intent
   router.post('/create-payment-intent', async (req, res) => {
-    console.log("'/create-payment-intent' endpoint was reached.")
-    try {
-      const { amount, email } = req.body;
+    console.log("'/create-payment-intent' endpoint was reached.");
 
-      // Validate the required fields
-      if (!amount || !email) {
-        return res.status(400).json({ error: 'Amount and email are required' });
+    try {
+      const { amount, email, name, shipping } = req.body;
+
+      if (!amount || !email || !shipping || !name) {
+        return res.status(400).json({ error: 'Missing required payment information' });
       }
 
-      // Create payment intent using Stripe API
+      // We're creating payment intents with all user data. In theory, this is for confirmation of Shopify information.
       const paymentIntent = await stripe.paymentIntents.create({
-        amount: amount * 100, // Convert amount to cents
-        currency: 'usd', // Specify your currency
-        metadata: { email }, // Attach the email to the metadata
+        amount: amount * 100, // cents
+        currency: 'usd',
+        receipt_email: email,
+        metadata: {
+          email,
+          full_name: `${name.first} ${name.last}`,
+          address_line_1: shipping.address1,
+          address_line_2: shipping.address2 || '',
+          city: shipping.city,
+          state: shipping.state,
+          postal_code: shipping.postalCode,
+          country: shipping.country,
+          phone: shipping.phone || '',
+        },
         automatic_payment_methods: { enabled: true },
-        // payment_method_types: ['card', 'applePay']
+        shipping: {
+          name: `${name.first} ${name.last}`,
+          address: {
+            line1: shipping.address1,
+            line2: shipping.address2,
+            city: shipping.city,
+            state: shipping.state,
+            postal_code: shipping.postalCode,
+            country: shipping.country,
+          },
+          phone: shipping.phone,
+        }
       });
-      
-      // Respond with the client secret from Stripe
+
       res.status(200).json({
         clientSecret: paymentIntent.client_secret,
         paymentIntentId: paymentIntent.id,
