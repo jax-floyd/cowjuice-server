@@ -7,7 +7,7 @@ const setupCreateOrder = (router) => {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'X-Shopify-Access-Token': ADMIN_TOKEN,
+              'X-Shopify-Access-Token': process.env.ADMIN_TOKEN,
             },
             body: JSON.stringify({
               order: {
@@ -33,7 +33,7 @@ const setupCreateOrder = (router) => {
           console.error('Server error:', err);
           res.status(500).json({ error: 'Internal server error' });
         }
-      });
-}
+    });
+};
 
-export default setupCreateOrder;
+module.exports = setupCreateOrder;
