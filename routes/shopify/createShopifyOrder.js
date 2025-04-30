@@ -1,14 +1,16 @@
+const shopify = require('../../configs/shopify');
+
 const setupCreateShopifyOrder = (router) => {
     router.post('/create-shopify-order', async (req, res) => {
         console.log("'/create-shopify-order' endpoint was reached.")
         const { email, lineItems, shipping } = req.body;
       
         try {
-          const shopifyResponse = await fetch(`https://${process.env.STORE_DOMAIN}/admin/api/2023-10/orders.json`, {
+          const shopifyResponse = await fetch(`https://${shopify.storeDomain}/admin/api/${shopify.apiVersion}/orders.json`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'X-Shopify-Access-Token': process.env.ADMIN_TOKEN,
+              'X-Shopify-Access-Token': shopify.ADMIN_TOKEN,
             },
             body: JSON.stringify({
               order: {
