@@ -4,10 +4,6 @@ const setupCreateShopifyOrder = (router) => {
     router.post('/create-shopify-order', async (req, res) => {
         console.log("'/create-shopify-order' endpoint was reached.")
         const { email, lineItems, shipping } = req.body;
-
-        console.log("Request body:", req.body);
-        console.log();
-        console.log("Shopify config:", shopify);
       
         try {
           const shopifyResponse = await fetch(`https://${shopify.storeDomain}/admin/api/${shopify.apiVersion}/orders.json`, {
