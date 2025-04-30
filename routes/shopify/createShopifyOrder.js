@@ -1,5 +1,6 @@
-const setupCreateOrder = (router) => {
+const setupCreateShopifyOrder = (router) => {
     router.post('/create-shopify-order', async (req, res) => {
+        console.log("'/create-shopify-order' endpoint was reached.")
         const { email, lineItems, shipping } = req.body;
       
         try {
@@ -36,4 +37,4 @@ const setupCreateOrder = (router) => {
     });
 };
 
-module.exports = setupCreateOrder;
+module.exports = setupCreateShopifyOrder;
