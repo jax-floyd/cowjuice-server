@@ -6,15 +6,15 @@ const setupCreateShopifyOrder = (router) => {
         const { email, lineItems, shipping } = req.body;
 
         console.log("Request body:", req.body);
-        console.log(shopify.adminToken);
-        console.log(shopify.storeDomain);
+        console.log();
+        console.log("Shopify config:", shopify);
       
         try {
           const shopifyResponse = await fetch(`https://${shopify.storeDomain}/admin/api/${shopify.apiVersion}/orders.json`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              'X-Shopify-Access-Token': shopify.ADMIN_TOKEN,
+              'X-Shopify-Access-Token': shopify.adminToken,
             },
             body: JSON.stringify({
               order: {
