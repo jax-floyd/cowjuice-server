@@ -13,7 +13,7 @@ const setupCreatePaymentIntentRoute = (router) => {
 
       // We're creating payment intents with all user data. In theory, this is for confirmation of Shopify information.
       const paymentIntent = await stripe.paymentIntents.create({
-        amount: amount / 100, // cents
+        amount: amount, // <-- comes in as 3599 and needs to be 3599 for successful payment intent creation
         currency: 'usd',
         receipt_email: email,
         metadata: {
