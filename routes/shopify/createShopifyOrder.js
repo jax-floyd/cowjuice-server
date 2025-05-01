@@ -3,9 +3,7 @@ const shopify = require('../../configs/shopify');
 const setupCreateShopifyOrder = (router) => {
     router.post('/create-shopify-order', async (req, res) => {
         console.log("'/create-shopify-order' endpoint was reached.")
-        const { email, lineItems, shipping } = req.body;
-
-        console.log(req.body);
+        const { email, name, lineItems, shipping } = req.body;
       
         try {
           const shopifyResponse = await fetch(`https://${shopify.storeDomain}/admin/api/${shopify.apiVersion}/orders.json`, {
@@ -21,7 +19,17 @@ const setupCreateShopifyOrder = (router) => {
                 send_fulfillment_receipt: true,
                 fulfillment_status: 'unfulfilled',
                 line_items: lineItems,
-                shipping_address: shipping,
+                shipping_address: {
+                  first_name: name?.first || 'First',
+                  last_name: name?.last || 'Last',
+                  address1: shipping.address1,
+                  address2: shipping.address2,
+                  city: shipping.city,
+                  province: shipping.state,
+                  zip: shipping.postalCode,
+                  country: shipping.country,
+                  phone: shipping.phone
+                },
               },
             }),
           });
