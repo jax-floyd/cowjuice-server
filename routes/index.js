@@ -14,6 +14,7 @@ const setupListProducts = require('./stripe/listProducts.js')
 const setupListTransactions = require('./stripe/listTransactions.js');
 const setupSearchCustomers = require('./stripe/searchCustomers.js');
 const setupCreateShopifyOrder = require('./shopify/createShopifyOrder.js')
+const setupSearchOrders = require('./shopify/searchOrders.js');
 
 const router = express.Router();
 
@@ -32,6 +33,7 @@ const setupRoutes = ( app ) => {
   setupListTransactions(router);
   setupSearchCustomers(router);
   setupCreateShopifyOrder(router);
+  setupSearchOrders(router);
 
   return router;
 };
