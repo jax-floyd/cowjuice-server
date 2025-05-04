@@ -45,7 +45,8 @@ const setupCreatePaymentIntentRoute = (router) => {
       res.status(200).json({
         clientSecret: paymentIntent.client_secret,
         paymentIntentId: paymentIntent.id,
-        paymentIntentStatus: paymentIntent.status
+        paymentIntentStatus: paymentIntent.status,
+        paymentIntent: paymentIntent,
       });
 
     } catch (error) {
