@@ -11,16 +11,19 @@ const setupSearchOrders = (router) => {
 
         const query = searchTerms.join(' ');
 
+        console.log('Search query:', query);
+
         try {
             const shopifyResponse = await fetch(`https://${shopify.storeDomain}/admin/api/${shopify.apiVersion}/orders.json?search=true&query=${encodeURIComponent(query)}&status=any`, {
                 method: 'GET',
                 headers: {
-                'Content-Type': 'application/json',
-                'X-Shopify-Access-Token': shopify.adminToken,
+                    'Content-Type': 'application/json',
+                    'X-Shopify-Access-Token': shopify.adminToken,
                 }
             });
 
             const data = await shopifyResponse.json();
+            console.log('Shopify response:', data);
 
             if (!shopifyResponse.ok) {
                 console.error('Shopify order search error:', data);
