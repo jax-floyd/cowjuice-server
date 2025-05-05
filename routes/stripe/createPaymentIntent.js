@@ -6,6 +6,7 @@ const setupCreatePaymentIntentRoute = (router) => {
 
     try {
       const { amount, email, name, shipping } = req.body;
+      console.log(req.body)
 
       if (!amount || !email || !shipping || !name) {
         return res.status(400).json({ error: 'Missing required payment information' });
