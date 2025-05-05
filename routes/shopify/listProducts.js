@@ -18,7 +18,6 @@ const setupListProducts = (router) => {
       );
 
       const productData = await productResponse.json();
-      console.log(productData)
 
       if (!productResponse.ok) {
         console.error('Shopify product fetch error:', productData);
@@ -32,7 +31,6 @@ const setupListProducts = (router) => {
         product.variants.map((variant) => variant.inventory_item_id)
       );
 
-      console.log(inventoryItemIds)
 
       // Step 3: Fetch inventory levels
       const inventoryResponse = await fetch(
@@ -47,7 +45,6 @@ const setupListProducts = (router) => {
       );
 
       const inventoryData = await inventoryResponse.json();
-      console.log(inventoryData)
 
       if (!inventoryResponse.ok) {
         console.error('Shopify inventory fetch error:', inventoryData);
@@ -71,8 +68,6 @@ const setupListProducts = (router) => {
           }),
         };
       });
-
-      console.log(enrichedProducts)
 
       res.json({ products: enrichedProducts });
     } catch (err) {
