@@ -5,14 +5,11 @@ const setupSearchOrders = (router) => {
         console.log("'/search-orders' endpoint was reached.")
         const { email, confirmationNumber } = req.body;
 
-        console.log('Request body:', req.body);
-
         const searchTerms = [];
         if (email) searchTerms.push(`email:${email}`);
         if (confirmationNumber) searchTerms.push(`confirmation_number:${confirmationNumber}`); // Shopify uses 'name' for the formatted order number
 
         const query = searchTerms.join(' ');
-        console.log('Query:', query);
 
         try {
             const shopifyResponse = await fetch(`https://${shopify.storeDomain}/admin/api/${shopify.apiVersion}/orders.json?search=true&query=${encodeURIComponent(query)}&status=any`, {
