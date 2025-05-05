@@ -68,6 +68,8 @@ const setupListProducts = (router) => {
         };
       });
 
+      console.log(enrichedProducts)
+
       res.json({ products: enrichedProducts });
     } catch (err) {
       console.error('Server error during product + inventory fetch:', err);
