@@ -5,7 +5,8 @@ const setupListProducts = (router) => {
     console.log("'/list-products' endpoint was reached.");
 
     try {
-      const shopifyResponse = await fetch(
+      // Step 1: Fetch Products
+      const productResponse = await fetch(
         `https://${shopify.storeDomain}/admin/api/${shopify.apiVersion}/products.json`,
         {
           method: 'GET',
@@ -16,17 +17,60 @@ const setupListProducts = (router) => {
         }
       );
 
-      const data = await shopifyResponse.json();
-      console.log(data);
+      const productData = await productResponse.json();
 
-      if (!shopifyResponse.ok) {
-        console.error('Shopify product list error:', data);
-        return res.status(400).json({ error: data });
+      if (!productResponse.ok) {
+        console.error('Shopify product fetch error:', productData);
+        return res.status(400).json({ error: productData });
       }
 
-      res.json({ products: data.products });
+      const products = productData.products;
+
+      // Step 2: Extract inventory_item_ids from all variants
+      const inventoryItemIds = products.flatMap((product) =>
+        product.variants.map((variant) => variant.inventory_item_id)
+      );
+
+      // Step 3: Fetch inventory levels
+      const inventoryResponse = await fetch(
+        `https://${shopify.storeDomain}/admin/api/${shopify.apiVersion}/inventory_levels.json?inventory_item_ids=${inventoryItemIds.join(',')}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Shopify-Access-Token': shopify.adminToken,
+          },
+        }
+      );
+
+      const inventoryData = await inventoryResponse.json();
+
+      if (!inventoryResponse.ok) {
+        console.error('Shopify inventory fetch error:', inventoryData);
+        return res.status(400).json({ error: inventoryData });
+      }
+
+      const inventoryMap = {};
+      inventoryData.inventory_levels.forEach((level) => {
+        inventoryMap[level.inventory_item_id] = level;
+      });
+
+      // Step 4: Add inventory data to each product's variants
+      const enrichedProducts = products.map((product) => {
+        return {
+          ...product,
+          variants: product.variants.map((variant) => {
+            return {
+              ...variant,
+              inventory: inventoryMap[variant.inventory_item_id] || null,
+            };
+          }),
+        };
+      });
+
+      res.json({ products: enrichedProducts });
     } catch (err) {
-      console.error('Server error during product fetch:', err);
+      console.error('Server error during product + inventory fetch:', err);
       res.status(500).json({ error: 'Internal server error' });
     }
   });
