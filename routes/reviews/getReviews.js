@@ -1,17 +1,26 @@
 const fs = require('fs');
 const path = require('path');
 
-const filePath = path.join(__dirname, '../../reviews.txt');
+const filePath = path.join(__dirname, '../../reviews.csv');
 
 const setupGetReviews = (router) => {
   router.get('/get-reviews', async (req, res) => {
     console.log("'/get-reviews' endpoint was reached.");
     try {
-        // Read the current number of cases from the file
-        const data = await fs.promises.readFile(filePath, 'utf8');
+        // Read the reviews from the CSV file
+        const data = fs.readFileSync(filePath, 'utf8');
 
-        // Split the data by new lines to get individual reviews
-        const reviews = data.split('\n').filter(line => line.trim() !== '');
+        if (!data) {
+          return res.status(404).json({ error: 'No reviews found' });
+        }
+        
+        // Split the data into lines
+        const reviews = data.trim().split('\n').slice(1); // Skip the header line if it exists
+        if (reviews.length === 0) {
+          return res.status(404).json({ error: 'No reviews found' });
+        }
+
+        console.log(reviews)
 
         // Split each review into the parts, extracting the date of the review and the text
         // The Best Milk on Planet Milk, hrg@stanford.edu, 6447231205665, true, 2023-10-01T12:00:00Z
@@ -21,6 +30,7 @@ const setupGetReviews = (router) => {
             const parts = review.split(', ');
             return parts[3] !== 'true'; // Assuming the 4th part is the confidential flag
         });
+
         // Sort the reviews by timestamp (5th part) in descending order
         filteredReviews.sort((a, b) => {
             const dateA = new Date(a.split(', ')[4]);
