@@ -13,11 +13,9 @@ const setupSaveReview = (router) => {
         if (!reviewData) {
           return res.status(400).json({ error: 'Review data is required' });
         }
-        // Append the review data to the file
-        fs.appendFileSync(filePath,
-            `${new Date().toISOString()} - ${reviewData}\n`,
-            'utf8'
-        );
+        
+        const reviewLine = `${reviewData}, ${req.body.email}, ${req.body.orderNumber}, ${req.body.confidential}, ${req.body.orderId}\n`;
+        fs.appendFileSync(filePath, reviewLine, 'utf8');
         console.log('Review saved successfully.');
 
         return res.json({ status: 'success' });
