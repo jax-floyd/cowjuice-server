@@ -7,7 +7,6 @@ const setupSaveReview = (router) => {
   router.post('/save-review', async (req, res) => {
     console.log("'/save-review' endpoint was reached.");
     try {
-        console.log(req.body); // Logs the body for debugging
         // Write the ZIP to the file
         const reviewData = req.body.review;
         if (!reviewData) {
@@ -16,7 +15,7 @@ const setupSaveReview = (router) => {
         
         const reviewLine = `${reviewData}, ${req.body.email}, ${req.body.orderNumber}, ${req.body.confidential}, ${req.body.orderId}, ${new Date().toISOString()}\n`;
         fs.appendFileSync(filePath, reviewLine, 'utf8');
-        console.log('Review saved successfully.');
+        console.log(`A new review from ${req.body.email} was successfully saved.`);
 
         return res.json({ status: 'success' });
       

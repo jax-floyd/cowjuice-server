@@ -19,7 +19,7 @@ const setupGetReviews = (router) => {
             const parts = review.split(', ');
             return {
                 text: parts[0],
-                timestamp: parts[2],
+                timestamp: parts[-1],
             };
         });
         
