@@ -7,14 +7,24 @@ const setupSaveReview = (router) => {
   router.post('/save-review', async (req, res) => {
     console.log("'/save-review' endpoint was reached.");
     try {
-      console.log(req.body); // Logs the body for debugging
-      // Write the ZIP to the file
-      await fs.promises.appendFile(filePath, req.body.zip.toString() + '\n', 'utf8');
-      return res.json({ status: 'success' });
+        console.log(req.body); // Logs the body for debugging
+        // Write the ZIP to the file
+        const reviewData = req.body.review;
+        if (!reviewData) {
+          return res.status(400).json({ error: 'Review data is required' });
+        }
+        // Append the review data to the file
+        fs.appendFileSync(filePath,
+            `${new Date().toISOString()} - ${reviewData}\n`,
+            'utf8'
+        );
+        console.log('Review saved successfully.');
+
+        return res.json({ status: 'success' });
       
     } catch (error) {
-      console.error('Error writing zip:', error);
-      res.status(500).json({ error: 'Failed to save review' });
+        console.error('Error writing zip:', error);
+        res.status(500).json({ error: 'Failed to save review' });
     }
   });
 };
