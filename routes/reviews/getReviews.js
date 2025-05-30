@@ -7,49 +7,29 @@ const setupGetReviews = (router) => {
   router.get('/get-reviews', async (req, res) => {
     console.log("'/get-reviews' endpoint was reached.");
     try {
-        // Read the reviews from the CSV file
-        const data = fs.readFileSync(filePath, 'utf8');
+        // Read CSV file
+      const rawData = fs.readFileSync(filePath, 'utf8');
 
-        if (!data) {
-          return res.status(404).json({ error: 'No reviews found' });
-        }
-        
-        // Split the data into lines
-        const reviews = data.trim().split('\n').slice(1); // Skip the header line if it exists
-        if (reviews.length === 0) {
-          return res.status(404).json({ error: 'No reviews found' });
-        }
+      // Split into lines and filter out any empty lines
+      const lines = rawData.split('\n').filter(line => line.trim() !== '');
 
-        console.log(reviews)
+      // Filter out confidential reviews (fifth field === 'true')
+      const filtered = lines.filter(line => {
+        const parts = line.split(',');
+        return parts[4]?.trim() !== 'true'; // exclude confidential
+      });
 
-        // Split each review into the parts, extracting the date of the review and the text
-        // The Best Milk on Planet Milk, hrg@stanford.edu, 6447231205665, true, 2023-10-01T12:00:00Z
-        
-        // Remove the reviews that are confidential
-        const filteredReviews = reviews.filter(review => {
-            const parts = review.split(', ');
-            return parts[3] !== 'true'; // Assuming the 4th part is the confidential flag
-        });
-
-        // Sort the reviews by timestamp (5th part) in descending order
-        filteredReviews.sort((a, b) => {
-            const dateA = new Date(a.split(', ')[4]);
-            const dateB = new Date(b.split(', ')[4]);
-            return dateB - dateA; // Sort in descending order
-        });
-
-        // Format the reviews to only include the text and timestamp
-        const formattedReviews = filteredReviews.map(review => 
-          {
-            const parts = review.split(', ');
-            return {
-                text: parts[0],
-                timestamp: parts[4],
-            };
-        });
+      // Format the reviews into objects with text and timestamp
+      const reviews = filtered.map(line => {
+        const parts = line.split(',');
+        return {
+          text: parts[1]?.trim(),       // review text
+          timestamp: parts[5]?.trim()   // ISO date
+        };
+      });
         
         // Send the reviews as a JSON response
-        res.json({ formattedReviews });
+        res.json({ reviews });
     } catch (error) {
         console.error('Error retrieving reviews:', error);
         res.status(500).json({ error: 'Failed to retrieve reviews' });
