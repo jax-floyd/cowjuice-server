@@ -28,11 +28,11 @@ const setupGetReviews = (router) => {
         };
       });
         
-        // Send the reviews as a JSON response
-        res.json({ reviews });
+      // Send the reviews as a JSON response
+      res.json({ reviews });
     } catch (error) {
-        console.error('Error retrieving reviews:', error);
-        res.status(500).json({ error: 'Failed to retrieve reviews' });
+      console.error('Error retrieving reviews:', error);
+      res.status(500).json({ error: 'Failed to retrieve reviews' });
     }
   });
 };
