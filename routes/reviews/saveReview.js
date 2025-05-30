@@ -9,11 +9,12 @@ const setupSaveReview = (router) => {
     try {
         // Write the ZIP to the file
         const reviewData = req.body.review;
+
         if (!reviewData) {
           return res.status(400).json({ error: 'Review data is required' });
         }
         
-        const reviewLine = `${reviewData}, ${req.body.email}, ${req.body.orderNumber}, ${req.body.confidential}, ${req.body.orderId}, ${new Date().toISOString()}\n`;
+        const reviewLine = `${reviewData}, ${req.body.email}, ${req.body.orderNumber}, ${req.body.confidential}, ${new Date().toISOString()}\n`;
         fs.appendFileSync(filePath, reviewLine, 'utf8');
         console.log(`A new review from ${req.body.email} was successfully saved.`);
 

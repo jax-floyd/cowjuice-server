@@ -27,7 +27,7 @@ const setupGetReviews = (router) => {
             const dateB = new Date(b.split(', ')[4]);
             return dateB - dateA; // Sort in descending order
         });
-        
+
         // Format the reviews to only include the text and timestamp
         const formattedReviews = filteredReviews.map(review => 
           {
