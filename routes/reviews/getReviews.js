@@ -12,9 +12,19 @@ const setupGetReviews = (router) => {
 
         // Split the data by new lines to get individual reviews
         const reviews = data.split('\n').filter(line => line.trim() !== '');
+
+        // Split each review into the parts, extracting the date of the review and the text
+        // The Best Milk on Planet Milk, hrg@stanford.edu, 6447231205665, true
+        const formattedReviews = reviews.map(review => {
+            const parts = review.split(', ');
+            return {
+                text: parts[0],
+                timestamp: parts[2],
+            };
+        });
         
         // Send the reviews as a JSON response
-        res.json({ reviews });
+        res.json({ formattedReviews });
     } catch (error) {
         console.error('Error retrieving reviews:', error);
         res.status(500).json({ error: 'Failed to retrieve reviews' });
