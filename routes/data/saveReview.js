@@ -3,9 +3,9 @@ const path = require('path');
 
 const filePath = path.join(__dirname, '../../reviews.txt');
 
-const setupWriteZip = (router) => {
-  router.post('/write-zip', async (req, res) => {
-    console.log("'/write-zip' endpoint was reached.");
+const setupSaveReview = (router) => {
+  router.post('/save-review', async (req, res) => {
+    console.log("'/save-review' endpoint was reached.");
     try {
       console.log(req.body); // Logs the body for debugging
       // Write the ZIP to the file
@@ -14,9 +14,9 @@ const setupWriteZip = (router) => {
       
     } catch (error) {
       console.error('Error writing zip:', error);
-      res.status(500).json({ error: 'Failed to write zip' });
+      res.status(500).json({ error: 'Failed to save review' });
     }
   });
 };
 
-module.exports = setupWriteZip;
+module.exports = setupSaveReview;

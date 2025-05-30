@@ -7,6 +7,7 @@ const setupGetCase = require('./cases/getCase.js');
 const setupDecrementCase = require('./cases/decrementCase.js');
 const setupIncrementCase = require('./cases/incrementCase.js');
 const setupWriteZip = require('./data/writeZip.js');
+const setupSaveReview = require('./data/saveReview.js');
 const setupListCharges = require('./stripe/listCharges.js');
 const setupListCustomers = require('./stripe/listCustomers.js');
 const setupCreateCustomer = require('./stripe/createCustomer.js');
@@ -26,6 +27,7 @@ const setupRoutes = ( app ) => {
   setupDecrementCase(router);
   setupIncrementCase(router);
   setupWriteZip(router);
+  setupSaveReview(router);
   setupListCharges(router);
   setupListCustomers(router);
   setupCreateCustomer(router);
