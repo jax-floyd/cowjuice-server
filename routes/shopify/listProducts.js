@@ -5,6 +5,7 @@ const setupListProducts = (router) => {
     console.log("'/list-products' endpoint was reached.");
 
     try {
+      console.log(`https://${shopify.storeDomain}/admin/api/${shopify.apiVersion}/products.json`)
       // Step 1: Fetch Products
       const productResponse = await fetch(
         `https://${shopify.storeDomain}/admin/api/${shopify.apiVersion}/products.json`,
