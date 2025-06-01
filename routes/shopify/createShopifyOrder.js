@@ -30,6 +30,14 @@ const setupCreateShopifyOrder = (router) => {
                   country: shipping.country,
                   phone: shipping.phone
                 },
+                shipping_lines: [
+                  {
+                    title: 'Flat Rate Shipping',
+                    price: '4.99',
+                    code: 'FlatRate',
+                    source: 'Custom',
+                  }
+                ]
               },
             }),
           });
