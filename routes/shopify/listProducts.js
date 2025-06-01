@@ -49,7 +49,7 @@ const setupListProducts = (router) => {
 
       // Step 5: Fetch shipping profiles
       const profilesRes = await fetch(
-        `https://${shopify.storeDomain}/admin/api/${shopify.apiVersion}/shipping_profiles.json`,
+        `https://${shopify.storeDomain}/admin/api/${shopify.apiVersion}/delivery_profiles.json`,
         { method: 'GET', headers }
       );
       const profilesData = await profilesRes.json();
