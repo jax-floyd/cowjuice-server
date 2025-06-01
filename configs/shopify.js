@@ -12,4 +12,6 @@ const shopify = {
   apiVersion: '2023-10', // You can update this to the latest supported version
 };
 
+console.log(shopify)
+
 module.exports = shopify;
