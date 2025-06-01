@@ -15,7 +15,7 @@ const app = express();
 app.use(express.json());
 
 // We define a function to map over the list of allowed CORS origins
-const allowedOrigins = ['http://localhost:3000', 'https://gotcowjuice.com'];
+const allowedOrigins = ['http://localhost:3000', 'https://gotcowjuice.com', 'https://cow-juice-development.web.app'];
 
 app.use(cors({
     origin: (origin, callback) => {
