@@ -29,6 +29,8 @@ const setupVerifyBetaAccess = (router) => {
         row[0]?.trim().toLowerCase().replace(/^@/, '') === normalized
       );
 
+      console.log('Authorized:', authorized);
+
       if (authorized) {
         res.json({ success: true });
       } else {
