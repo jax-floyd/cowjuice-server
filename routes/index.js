@@ -20,6 +20,7 @@ const setupSearchOrders = require('./shopify/searchOrders.js');
 const setupFetchOrders = require('./shopify/fetchOrders.js');
 
 const setupVerifyBetaAccess = require('./beta/verifyBetaAccess.js');
+const setupSaveBetaAcessRequest = require('./beta/saveBetaAccessRequest.js');
 
 const router = express.Router();
 
@@ -44,6 +45,7 @@ const setupRoutes = ( app ) => {
   setupFetchOrders(router);
 
   setupVerifyBetaAccess(router);
+  setupSaveBetaAcessRequest(router);
 
   return router;
 };
