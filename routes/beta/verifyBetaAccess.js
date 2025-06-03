@@ -17,6 +17,7 @@ const setupVerifyBetaAccess = (router) => {
 
       // Normalize username: lowercase, remove leading '@' if present
       const normalized = username.trim().toLowerCase().replace(/^@/, '');
+      console.log('Normalized username:', normalized);
 
       const rawData = fs.readFileSync(filePath, 'utf8');
 
@@ -24,10 +25,14 @@ const setupVerifyBetaAccess = (router) => {
         skipEmptyLines: true,
       });
 
+      console.log('CSV records loaded:', records);
+
       // Check if normalized username is in CSV (column 0 assumed)
       const authorized = records.some(row =>
         row[0]?.trim().toLowerCase().replace(/^@/, '') === normalized
       );
+
+      console.log('Authorization check result:', authorized);
 
       if (authorized) {
         res.json({ success: true });
