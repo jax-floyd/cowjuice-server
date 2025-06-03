@@ -1,8 +1,8 @@
 const shopify = require('../../configs/shopify');
 
 const setupFetchOrders = (router) => {
-  router.get('/shopify/orders', async (req, res) => {
-    console.log("'/shopify/orders' endpoint was reached.");
+  router.get('/admin/fetch-orders', async (req, res) => {
+    console.log("'/admin/fetch-orders' endpoint was reached.");
 
     try {
       const response = await fetch(
