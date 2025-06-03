@@ -2,13 +2,14 @@ const fs = require('fs');
 const path = require('path');
 const parse = require('csv-parse/sync');
 
-const filePath = path.join(__dirname, '../../cjprbtp.csv');
+const filePath = path.join(__dirname, '../../private_beta_testers.csv');
 
 const setupVerifyBetaAccess = (router) => {
   router.post('/verify-beta-access', async (req, res) => {
     console.log("'/verify-beta-access' endpoint was reached.");
     try {
       const { username } = req.body;
+      console.log('Received username:', username);
 
       if (!username || typeof username !== 'string') {
         return res.status(400).json({ success: false, error: 'Invalid or missing username' });
