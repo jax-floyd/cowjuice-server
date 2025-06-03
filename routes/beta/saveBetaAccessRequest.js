@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const uuid = require('uuid');
+const parse = require('csv-parse/sync');
 
 const escapeCsvField = (value) => {
   if (value == null) return '';
@@ -24,7 +25,27 @@ const setupSaveBetaAcessRequest = (router) => {
       }
 
       const normalized = username.trim().toLowerCase().replace(/^@/, '');
+      const csvFilePath = path.join(__dirname, '../../beta_access_requests.csv');
 
+      // Ensure file exists
+      if (fs.existsSync(csvFilePath)) {
+        const rawData = fs.readFileSync(csvFilePath, 'utf8');
+        const records = parse.parse(rawData, { skipEmptyLines: true });
+
+        // Check for duplicate username in second column (index 1)
+        const alreadyExists = records.some(row => 
+          row[1]?.trim().toLowerCase().replace(/^@/, '') === normalized
+        );
+
+        if (alreadyExists) {
+          return res.status(409).json({
+            success: false,
+            error: 'This username has already requested access.',
+          });
+        }
+      }
+
+      // Create CSV row
       const csvLine = [
         uuid.v4(),                            // Unique ID
         escapeCsvField(normalized),           // Normalized TikTok username
@@ -32,7 +53,6 @@ const setupSaveBetaAcessRequest = (router) => {
         new Date().toISOString()              // Timestamp
       ].join(',') + '\n';
 
-      const csvFilePath = path.join(__dirname, '../../beta_access_requests.csv');
       fs.appendFileSync(csvFilePath, csvLine, 'utf8');
 
       console.log(`Access request saved for @${normalized}`);
