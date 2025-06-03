@@ -29,12 +29,10 @@ const setupVerifyBetaAccess = (router) => {
         row[0]?.trim().toLowerCase().replace(/^@/, '') === normalized
       );
 
-      console.log('Authorized:', authorized);
-
       if (authorized) {
         res.json({ success: true });
       } else {
-        res.status(403).json({ success: false, error: 'Unauthorized' });
+        res.json({ success: false, error: 'Unauthorized' });
       }
     } catch (error) {
       console.error('Error confirming beta access:', error);
