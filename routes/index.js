@@ -17,7 +17,9 @@ const setupListTransactions = require('./stripe/listTransactions.js');
 const setupSearchCustomers = require('./stripe/searchCustomers.js');
 const setupCreateShopifyOrder = require('./shopify/createShopifyOrder.js')
 const setupSearchOrders = require('./shopify/searchOrders.js');
-const setupFetchOrders = require('./shopify/fetchOrders.js'); 
+const setupFetchOrders = require('./shopify/fetchOrders.js');
+
+const setupVerifyBetaAccess = require('./beta/verifyBetaAccess.js');
 
 const router = express.Router();
 
@@ -40,6 +42,8 @@ const setupRoutes = ( app ) => {
   setupCreateShopifyOrder(router);
   setupSearchOrders(router);
   setupFetchOrders(router);
+
+  setupVerifyBetaAccess(router);
 
   return router;
 };
