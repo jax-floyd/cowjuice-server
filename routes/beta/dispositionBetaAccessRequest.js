@@ -42,7 +42,7 @@ const setupDispositionBetaAccessRequest = (router) => {
       }
 
       console.log("💾 Writing updated beta_access_requests.csv...");
-      fs.writeFileSync(requestsPath, stringify.stringify(updatedRecords), 'utf8');
+      fs.writeFileSync(testersPath, stringify.stringify(updatedRecords), 'utf8');
       console.log(`📝 Updated request status to "${status}"`);
 
       console.log("🎉 Disposition complete");
