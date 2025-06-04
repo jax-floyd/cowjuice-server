@@ -2,9 +2,11 @@ const easypost = require('../../configs/easypost');
 
 const setupGetRates = (router) => {
   router.post('/admin/get-rates', async (req, res) => {
-    console.log("'/admin/get-rates' [EasyPost] was reached.");
+    console.log("'/admin/get-rates' endpoint was reached.");
 
     const { toAddress, parcel } = req.body;
+
+    console.log(req.body);
 
     try {
       const shipment = await easypost.Shipment.create({
