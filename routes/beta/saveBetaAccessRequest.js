@@ -25,7 +25,7 @@ const setupSaveBetaAcessRequest = (router) => {
       }
 
       const normalized = username.trim().toLowerCase().replace(/^@/, '');
-      const csvFilePath = path.join(__dirname, '../../beta_access_requests.csv');
+      const csvFilePath = path.join(__dirname, '../../beta_testers.csv'); // <-- Canonical file
 
       // Ensure file exists
       if (fs.existsSync(csvFilePath)) {

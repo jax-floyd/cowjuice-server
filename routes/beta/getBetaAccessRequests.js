@@ -2,21 +2,19 @@ const fs = require('fs');
 const path = require('path');
 const parse = require('csv-parse/sync');
 
-const filePath = path.join(__dirname, '../../beta_access_requests.csv');
+const filePath = path.join(__dirname, '../../beta_testers.csv');
 
-const setupGetBetaAccessRequests = (router) => {
-  router.get('/get-beta-access-requests', async (req, res) => {
-    console.log("'/get-beta-access-requests' endpoint was reached.");
+const setupGetBetaTesters = (router) => {
+  router.get('/get-beta-testers', async (req, res) => {
+    console.log("'/get-beta-testers' endpoint was reached.");
 
     try {
-      const { page = 1, limit = 25 } = req.query;
+      const { page = 1, limit = 25, status } = req.query; // <-- Querying by status, getting either 'approved', 'rejected', or 'awaiting' users
       const pageNum = parseInt(page, 10);
       const limitNum = parseInt(limit, 10);
 
       const rawData = fs.readFileSync(filePath, 'utf8');
-      const records = parse.parse(rawData, {
-        skipEmptyLines: true,
-      });
+      const records = parse.parse(rawData, { skipEmptyLines: true });
 
       const formatted = records.map(row => ({
         id: row[0],
@@ -25,22 +23,27 @@ const setupGetBetaAccessRequests = (router) => {
         timestamp: row[3],
       }));
 
+      // Optional filter by status
+      const filtered = status
+        ? formatted.filter(entry => entry.status?.toLowerCase() === status.toLowerCase())
+        : formatted;
+
       const start = (pageNum - 1) * limitNum;
       const end = start + limitNum;
-      const paginated = formatted.slice(start, end);
+      const paginated = filtered.slice(start, end);
 
       res.json({
         requests: paginated,
-        total: formatted.length,
+        total: filtered.length,
         page: pageNum,
         limit: limitNum,
-        hasNext: end < formatted.length,
+        hasNext: end < filtered.length,
       });
     } catch (error) {
-      console.error('Error reading beta access requests:', error);
-      res.status(500).json({ error: 'Failed to load beta access requests' });
+      console.error('Error reading beta testers file:', error);
+      res.status(500).json({ error: 'Failed to load beta testers' });
     }
   });
 };
 
-module.exports = setupGetBetaAccessRequests;
+module.exports = setupGetBetaTesters;
