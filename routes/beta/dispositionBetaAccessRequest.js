@@ -28,7 +28,7 @@ const setupDispositionBetaAccessRequest = (router) => {
       let found = false;
 
       const updatedRecords = records.map((row, i) => {
-        if (row[0]?.trim().toLowerCase().replace(/^@/, '') === id.trim().toLowerCase().replace(/^@/, '')) {
+        if (row[1]?.trim().toLowerCase().replace(/^@/, '') === id.trim().toLowerCase().replace(/^@/, '')) { // <-- Row 1 is the @username
           console.log(`✅ Match found on row ${i}:`, row);
           row[2] = status;
           targetRow = row;
@@ -59,7 +59,9 @@ const setupDispositionBetaAccessRequest = (router) => {
           console.log("📁 private_beta_testers.csv does not exist yet – will create");
         }
 
-        const alreadyExists = testersData.some(row => row[0] === id);
+        const alreadyExists = testersData.some(row =>
+            row[1]?.trim().toLowerCase().replace(/^@/, '') === id.trim().toLowerCase().replace(/^@/, '')
+        ); // <-- Row 1 is the @username
 
         if (alreadyExists) {
           console.log("⚠️ Tester already in private_beta_testers.csv – skipping append");
