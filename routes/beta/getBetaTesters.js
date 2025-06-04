@@ -15,6 +15,7 @@ const setupGetBetaTesters = (router) => {
 
       const rawData = fs.readFileSync(filePath, 'utf8');
       const records = parse.parse(rawData, { skipEmptyLines: true });
+      console.log(`Loaded ${records.length} beta testers from file.`);
 
       const formatted = records.map(row => ({
         id: row[0],
@@ -22,6 +23,8 @@ const setupGetBetaTesters = (router) => {
         status: row[2],
         timestamp: row[3],
       }));
+
+      console.log(`Formatted beta testers: ${JSON.stringify(formatted, null, 2)}`);
 
       // Optional filter by status
       const filtered = status
