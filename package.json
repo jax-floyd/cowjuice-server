@@ -23,6 +23,7 @@
     "mysql": "^2.18.1",
     "passkit-generator": "^3.1.11",
     "path": "^0.12.7",
+    "shippo": "^1.7.1",
     "stripe": "^12.14.0",
     "uuid": "^11.1.0"
   }

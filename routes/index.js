@@ -24,6 +24,8 @@ const setupSaveBetaAcessRequest = require('./beta/saveBetaAccessRequest.js');
 const setupGetBetaTesters = require('./beta/getBetaTesters.js');
 const setupDispositionBetaAccessRequest = require('./beta/dispositionBetaAccessRequest.js');
 
+const setupGetRates = require('./shippo/getRates.js');
+
 const router = express.Router();
 
 // Our initiation function ...
@@ -50,6 +52,8 @@ const setupRoutes = ( app ) => {
   setupSaveBetaAcessRequest(router);
   setupGetBetaTesters(router);
   setupDispositionBetaAccessRequest(router);
+
+  setupGetRates(router);
 
   return router;
 };
