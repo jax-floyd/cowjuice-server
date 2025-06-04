@@ -5,6 +5,7 @@ const setupFulfillOrder = (router) => {
     console.log("'/admin/fulfill-order' endpoint was reached.");
 
     const { orderId, trackingNumber, trackingCompany, lineItems } = req.body;
+    console.log('Request body:', req.body);
 
     if (!orderId || !trackingNumber || !trackingCompany || !lineItems) {
       return res.status(400).json({ error: 'Missing required fields.' });
@@ -29,6 +30,8 @@ const setupFulfillOrder = (router) => {
           }),
         }
       );
+
+      console.log('Fulfillment response status:', fulfillmentResponse.status);
 
       const data = await fulfillmentResponse.json();
 
