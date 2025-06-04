@@ -1,5 +1,7 @@
 const stripe = require('../../configs/stripe.js');
 
+console.log('Stripe API Key:', stripe.apiKey); // Debugging line to check if the API key is loaded correctly
+
 const setupCreatePaymentIntentRoute = (router) => {
   router.post('/create-payment-intent', async (req, res) => {
     console.log("'/create-payment-intent' endpoint was reached.");
