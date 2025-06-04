@@ -7,10 +7,16 @@ const setupGetRates = (router) => {
     const { toAddress, parcel } = req.body;
 
     try {
-      const shipment = new easypost.Shipment({
+      const shipment = await easypost.Shipment.create({
         to_address: {
-          ...toAddress,
+          name: toAddress.name,
+          street1: toAddress.street1,
+          city: toAddress.city,
+          state: toAddress.state,
+          zip: toAddress.zip,
+          country: toAddress.country,
           phone: toAddress.phone || '9178631395',
+          email: toAddress.email,
         },
         from_address: {
           name: 'Cow Juice Warehouse',
@@ -19,8 +25,8 @@ const setupGetRates = (router) => {
           state: 'NY',
           zip: '10024',
           country: 'US',
-          email: 'cowjuiceman@gotcowjuice.com',
           phone: '9178631395',
+          email: 'cowjuiceman@gotcowjuice.com',
         },
         parcel: {
           length: parcel.length,
@@ -30,9 +36,7 @@ const setupGetRates = (router) => {
         },
       });
 
-      await shipment.save(); // <-- Note: `save()` is valid in the instance-based approach
-
-      res.json({ rates: shipment.rates });
+      res.json({ rates: shipment.rates, shipment_id: shipment.id });
     } catch (err) {
       console.error('EasyPost Get Rates Error:', err);
       res.status(500).json({ error: 'Failed to fetch shipping rates' });
