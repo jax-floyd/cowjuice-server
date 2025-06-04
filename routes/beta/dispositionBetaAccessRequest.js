@@ -28,7 +28,7 @@ const setupDispositionBetaAccessRequest = (router) => {
       let found = false;
 
       const updatedRecords = records.map((row, i) => {
-        if (row[0] === id) {
+        if (row[0]?.trim().toLowerCase().replace(/^@/, '') === id.trim().toLowerCase().replace(/^@/, '')) {
           console.log(`✅ Match found on row ${i}:`, row);
           row[2] = status;
           targetRow = row;
