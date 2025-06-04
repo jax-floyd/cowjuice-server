@@ -1,5 +1,7 @@
 const shippo = require('../../configs/shippo');
 
+console.log('Shippo API Key:', shippo.apiKey); // Debugging line to check if the API key is loaded correctly
+
 const setupGetRates = (router) => {
   router.post('/admin/get-rates', async (req, res) => {
     console.log("'/admin/get-rates' endpoint was reached.");
