@@ -11,6 +11,7 @@ const setupBuyLabel = (router) => {
     }
 
     try {
+
       const shipment = await easypost.Shipment.retrieve(shipmentId);
       const rate = shipment.rates.find((r) => r.id === rateId);
 

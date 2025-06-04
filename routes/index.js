@@ -18,6 +18,7 @@ const setupSearchCustomers = require('./stripe/searchCustomers.js');
 const setupCreateShopifyOrder = require('./shopify/createShopifyOrder.js')
 const setupSearchOrders = require('./shopify/searchOrders.js');
 const setupFetchOrders = require('./shopify/fetchOrders.js');
+const setupFulfillOrder = require('./shopify/fulfillOrder.js');
 
 const setupVerifyBetaAccess = require('./beta/verifyBetaAccess.js');
 const setupSaveBetaAcessRequest = require('./beta/saveBetaAccessRequest.js');
@@ -48,6 +49,7 @@ const setupRoutes = ( app ) => {
   setupCreateShopifyOrder(router);
   setupSearchOrders(router);
   setupFetchOrders(router);
+  setupFulfillOrder(router);
 
   setupVerifyBetaAccess(router);
   setupSaveBetaAcessRequest(router);

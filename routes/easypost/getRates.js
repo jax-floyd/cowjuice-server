@@ -19,8 +19,8 @@ const setupGetRates = (router) => {
           email: toAddress.email,
         },
         from_address: {
-          name: 'Cow Juice Warehouse',
-          street1: '334 W 86 St Apt 2A',
+          name: 'Planet Milk',
+          street1: '334 W 86 St',
           city: 'New York',
           state: 'NY',
           zip: '10024',
