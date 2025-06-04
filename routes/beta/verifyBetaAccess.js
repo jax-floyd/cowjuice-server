@@ -1,3 +1,5 @@
+const fs = require('fs');
+const parse = require('csv-parse/sync');
 const path = require('path');
 
 const filePath = path.join(__dirname, '../../beta_testers.csv'); // <-- Canonical SST
