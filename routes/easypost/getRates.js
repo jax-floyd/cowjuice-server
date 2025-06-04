@@ -38,6 +38,8 @@ const setupGetRates = (router) => {
         },
       });
 
+      console.log('Shipment created:', shipment);
+
       res.json({ rates: shipment.rates, shipment_id: shipment.id });
     } catch (err) {
       console.error('EasyPost Get Rates Error:', err);
