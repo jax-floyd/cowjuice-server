@@ -9,7 +9,7 @@ const setupGetBetaTesters = (router) => {
     console.log("'/get-beta-testers' endpoint was reached.");
 
     try {
-      const { page = 1, limit = 25, status } = req.query; // <-- Querying by status, getting either 'approved', 'rejected', or 'awaiting' users
+      const { page = 1, limit = 25, status, username } = req.query;
       const pageNum = parseInt(page, 10);
       const limitNum = parseInt(limit, 10);
 
@@ -24,9 +24,22 @@ const setupGetBetaTesters = (router) => {
         timestamp: row[3],
       }));
 
-      console.log(`Formatted beta testers: ${JSON.stringify(formatted, null, 2)}`);
+      // 🔍 If username query is present, return just that entry (case-insensitive match)
+      if (username) {
+        const target = formatted.find(entry =>
+          entry.username?.toLowerCase() === username.toLowerCase().trim()
+        );
 
-      // Optional filter by status
+        return res.json({
+          requests: target ? [target] : [],
+          total: target ? 1 : 0,
+          page: 1,
+          limit: 1,
+          hasNext: false,
+        });
+      }
+
+      // 📦 Otherwise filter and paginate
       const filtered = status
         ? formatted.filter(entry => entry.status?.toLowerCase() === status.toLowerCase())
         : formatted;
