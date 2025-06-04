@@ -10,6 +10,4 @@ const stripe = require('stripe')(
     : process.env.STRIPE_SECRET_KEY_TEST
 );
 
-console.log('Stripe API Key:', stripe._apiKey); // Debugging line to check if the API key is loaded correctly
-
 module.exports = stripe;
