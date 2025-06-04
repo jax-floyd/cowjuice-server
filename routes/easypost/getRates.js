@@ -6,8 +6,6 @@ const setupGetRates = (router) => {
 
     const { toAddress, parcel } = req.body;
 
-    console.log(req.body);
-
     try {
       const shipment = await easypost.Shipment.create({
         to_address: {
@@ -37,8 +35,6 @@ const setupGetRates = (router) => {
           weight: parcel.weight,
         },
       });
-
-      console.log('Shipment created:', shipment);
 
       res.json({ rates: shipment.rates, shipment_id: shipment.id });
     } catch (err) {
