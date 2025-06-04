@@ -27,7 +27,18 @@ const setupBuyLabel = (router) => {
       });
     } catch (err) {
       console.error('EasyPost Buy Label Error:', err);
-      res.status(500).json({ error: 'Failed to buy label' });
+
+      // Catch known EasyPost error when a label already exists
+      if (err.code === 'SHIPMENT.POSTAGE.EXISTS') {
+        return res.status(409).json({
+          error: 'A label has already been purchased for this shipment.',
+        });
+      }
+
+      // Fallback generic error
+      res.status(500).json({
+        error: 'Failed to buy label. Please try again or contact support.',
+      });
     }
   });
 };
