@@ -13,14 +13,13 @@ const setupBuyLabel = (router) => {
     try {
       const shipment = await easypost.Shipment.retrieve(shipmentId);
       const rate = shipment.rates.find((r) => r.id === rateId);
-      console.log('Shipment retrieved:', shipment);
-      console.log('Rate found:', rate);
 
       if (!rate) {
         return res.status(404).json({ error: 'Rate not found on shipment' });
       }
 
       const boughtShipment = await easypost.Shipment.buy(shipment.id, rate);
+      console.log('Bought Shipment:', boughtShipment);
 
       res.json({
         label_url: boughtShipment.postage_label.label_url,
