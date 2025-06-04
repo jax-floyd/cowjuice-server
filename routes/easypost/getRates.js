@@ -7,34 +7,30 @@ const setupGetRates = (router) => {
     const { toAddress, parcel } = req.body;
 
     try {
-      const to = await new easypost.Address({
-        ...toAddress,
-        verify: ['delivery']
-      }).save();
+      const shipment = new easypost.Shipment({
+        to_address: {
+          ...toAddress,
+          phone: toAddress.phone || '9178631395',
+        },
+        from_address: {
+          name: 'Cow Juice Warehouse',
+          street1: '334 W 86 St Apt 2A',
+          city: 'New York',
+          state: 'NY',
+          zip: '10024',
+          country: 'US',
+          email: 'cowjuiceman@gotcowjuice.com',
+          phone: '9178631395',
+        },
+        parcel: {
+          length: parcel.length,
+          width: parcel.width,
+          height: parcel.height,
+          weight: parcel.weight,
+        },
+      });
 
-      const from = await new easypost.Address({
-        name: 'Cow Juice Warehouse',
-        street1: '334 W 86 St Apt 2A',
-        city: 'New York',
-        state: 'NY',
-        zip: '10024',
-        country: 'US',
-        phone: '9178631395',
-        email: 'cowjuiceman@gotcowjuice.com',
-      }).save();
-
-      const parcelObj = await new easypost.Parcel({
-        length: parcel.length,
-        width: parcel.width,
-        height: parcel.height,
-        weight: parcel.weight,
-      }).save();
-
-      const shipment = await new easypost.Shipment({
-        to_address: to,
-        from_address: from,
-        parcel: parcelObj,
-      }).save();
+      await shipment.save(); // <-- Note: `save()` is valid in the instance-based approach
 
       res.json({ rates: shipment.rates });
     } catch (err) {
