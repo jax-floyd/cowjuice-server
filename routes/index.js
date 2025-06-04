@@ -25,6 +25,7 @@ const setupGetBetaTesters = require('./beta/getBetaTesters.js');
 const setupDispositionBetaAccessRequest = require('./beta/dispositionBetaAccessRequest.js');
 
 const setupGetRates = require('./easypost/getRates.js');
+const setupBuyLabel = require('./easypost/buyLabel.js');
 
 const router = express.Router();
 
@@ -54,6 +55,7 @@ const setupRoutes = ( app ) => {
   setupDispositionBetaAccessRequest(router);
 
   setupGetRates(router);
+  setupBuyLabel(router);
 
   return router;
 };
