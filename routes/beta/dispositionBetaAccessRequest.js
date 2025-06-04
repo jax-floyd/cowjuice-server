@@ -3,7 +3,8 @@ const path = require('path');
 const parse = require('csv-parse/sync');
 const stringify = require('csv-stringify/sync');
 
-const filePath = path.join(__dirname, '../../beta_access_requests.csv');
+const requestsPath = path.join(__dirname, '../../beta_access_requests.csv');
+const testersPath = path.join(__dirname, '../../private_beta_testers.csv');
 
 const setupDispositionBetaAccessRequest = (router) => {
   router.post('/disposition-beta-access-request', async (req, res) => {
@@ -15,33 +16,43 @@ const setupDispositionBetaAccessRequest = (router) => {
     }
 
     try {
-      const rawData = fs.readFileSync(filePath, 'utf8');
-      const records = parse.parse(rawData, {
-        skipEmptyLines: true,
-      });
+      const rawRequests = fs.readFileSync(requestsPath, 'utf8');
+      const records = parse.parse(rawRequests, { skipEmptyLines: true });
 
-      let updated = false;
-
+      let targetRow;
       const updatedRecords = records.map(row => {
         if (row[0] === id) {
           row[2] = status;
-          updated = true;
+          targetRow = row;
         }
         return row;
       });
 
-      if (!updated) {
+      if (!targetRow) {
         return res.status(404).json({ success: false, error: 'ID not found' });
       }
 
-      const csvOutput = stringify.stringify(updatedRecords);
-      fs.writeFileSync(filePath, csvOutput, 'utf8');
-
+      fs.writeFileSync(requestsPath, stringify.stringify(updatedRecords), 'utf8');
       console.log(`Updated request ID ${id} to status "${status}"`);
+
+      if (status === 'approved') {
+        const testersData = fs.existsSync(testersPath)
+          ? parse.parse(fs.readFileSync(testersPath, 'utf8'), { skipEmptyLines: true })
+          : [];
+
+        // Prevent duplicates
+        const exists = testersData.some(row => row[0] === id);
+        if (!exists) {
+          testersData.push(targetRow);
+          fs.writeFileSync(testersPath, stringify.stringify(testersData), 'utf8');
+          console.log(`Added approved tester to private_beta_testers.csv: ${targetRow[1]}`);
+        }
+      }
+
       res.json({ success: true });
-    } catch (error) {
-      console.error('Error updating beta access request:', error);
-      res.status(500).json({ success: false, error: 'Failed to update status' });
+    } catch (err) {
+      console.error('Error updating disposition:', err);
+      res.status(500).json({ success: false, error: 'Internal server error' });
     }
   });
 };

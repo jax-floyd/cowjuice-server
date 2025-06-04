@@ -18,14 +18,13 @@ const setupVerifyBetaAccess = (router) => {
       const normalized = username.trim().toLowerCase().replace(/^@/, '');
 
       const rawData = fs.readFileSync(filePath, 'utf8');
-
       const records = parse.parse(rawData, {
         skipEmptyLines: true,
       });
 
-      // Check if normalized username is in CSV (column 0 assumed)
+      // Check if normalized username exists in second column
       const authorized = records.some(row =>
-        row[0]?.trim().toLowerCase().replace(/^@/, '') === normalized
+        row[1]?.trim().toLowerCase().replace(/^@/, '') === normalized
       );
 
       if (authorized) {
