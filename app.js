@@ -3,6 +3,7 @@ const fs = require('fs');
 const https = require('https');
 const cors = require('cors');
 const setupRoutes = require('./routes/index.js');
+const checkApiKey = require('./middleware/checkApiKey');
 
 // We read the SSL certificate and private key from `keys` directory
 const httpsOptions = {
@@ -13,6 +14,7 @@ const httpsOptions = {
 
 const app = express();
 app.use(express.json());
+app.use(checkApiKey); // <-- Enforces API key globally
 
 // We define a function to map over the list of allowed CORS origins
 const allowedOrigins = ['http://localhost:3000', 'http://localhost:3001', 'https://gotcowjuice.com', 'https://cow-juice-development.web.app', '', 'https://admin.gotcowjuice.com'];

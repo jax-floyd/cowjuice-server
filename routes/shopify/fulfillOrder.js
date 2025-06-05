@@ -51,7 +51,7 @@ const setupFulfillOrder = (router) => {
       }
 
       const fulfillment = await fulfillmentCreateResp.json();
-      console.log('Fulfillment created:', fulfillment);
+      // console.log('Fulfillment created:', fulfillment);
       res.json({ success: true, fulfillment });
     } catch (err) {
       console.error('Error fulfilling Shopify order:', err);
