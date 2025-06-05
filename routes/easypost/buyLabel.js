@@ -5,6 +5,7 @@ const setupBuyLabel = (router) => {
     console.log("'/admin/easypost/buy-label' endpoint was reached.");
 
     const { shipmentId, rateId } = req.body;
+    console.log('Request body:', req.body);
 
     if (!shipmentId || !rateId) {
       return res.status(400).json({ error: 'Missing shipmentId or rateId' });
@@ -13,7 +14,9 @@ const setupBuyLabel = (router) => {
     try {
 
       const shipment = await easypost.Shipment.retrieve(shipmentId);
+      console.log('Retrieved Shipment:', shipment);
       const rate = shipment.rates.find((r) => r.id === rateId);
+      console.log('Selected Rate:', rate);
 
       if (!rate) {
         return res.status(404).json({ error: 'Rate not found on shipment' });
