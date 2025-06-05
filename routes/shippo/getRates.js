@@ -5,15 +5,6 @@ const { Shippo } = require('shippo');
 require('../../configs/loadEnv')(); // or dotenv.config()
 
 
-const shippo = new Shippo({
-  apiKey: process.env.NODE_ENV === 'production'
-    ? process.env.SHIPPO_API_KEY_LIVE
-    : process.env.SHIPPO_API_KEY_TEST,
-  shippoApiVersion: '2018-02-08',
-});
-
-console.log(shippo);
-
 const setupGetRatesShippo = (router) => {
   router.post('/admin/shippo/get-rates', async (req, res) => {
     console.log("'/admin/shippo/get-rates' endpoint was reached.");
@@ -21,6 +12,14 @@ const setupGetRatesShippo = (router) => {
     const { toAddress, parcel } = req.body;
 
     try {
+
+      const shippo = new Shippo({
+        apiKey: process.env.NODE_ENV === 'production'
+          ? process.env.SHIPPO_API_KEY_LIVE
+          : process.env.SHIPPO_API_KEY_TEST,
+        shippoApiVersion: '2018-02-08',
+      });
+      console.log(shippo);
       const shipment = await shippo.shipments.create({
         addressFrom: {
           name: 'Planet Milk',
