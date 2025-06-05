@@ -1,6 +1,6 @@
 // const shippo = require('../../configs/shippo');
 
-const { Shippo } = require('shippo');
+const createShippo = require('shippo/lib/default');
 
 require('../../configs/loadEnv')(); // or dotenv.config()
 
@@ -13,12 +13,12 @@ const setupGetRatesShippo = (router) => {
 
     try {
 
-      const shippo = new Shippo({
-        apiKey: process.env.NODE_ENV === 'production'
+      const shippo = createShippo(
+        process.env.NODE_ENV === 'production'
           ? process.env.SHIPPO_API_KEY_LIVE
-          : process.env.SHIPPO_API_KEY_TEST,
-        shippoApiVersion: '2018-02-08',
-      });
+          : process.env.SHIPPO_API_KEY_TEST
+      );  
+
       console.log(shippo);
       const shipment = await shippo.shipments.create({
         addressFrom: {
