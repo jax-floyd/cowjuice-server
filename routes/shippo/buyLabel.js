@@ -18,6 +18,8 @@ const setupBuyLabelShippo = (router) => {
         async: false,
       });
 
+      console.log('✅ Shippo transaction request sent for rate:', rateId);
+
       const transaction = transactionRes.data;
         console.log('✅ Shippo transaction created:', transaction);
 
