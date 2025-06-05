@@ -8,32 +8,36 @@ const setupGetRatesShippo = (router) => {
 
     try {
       const shipment = await shippo.shipments.create({
-        address_from: {
+        addressFrom: {
           name: 'Planet Milk',
+          company : 'Cow Juice Inc.',
           street1: '334 W 86 St',
+          street3: 'Apt 1',
           city: 'New York',
           state: 'NY',
           zip: '10024',
           country: 'US',
           phone: '9178631395',
           email: 'cowjuiceman@gotcowjuice.com',
-        },
-        address_to: {
+        },      
+        addressTo: {
           name: toAddress.name,
           street1: toAddress.street1,
+          street2: toAddress.street2 || '',
           city: toAddress.city,
           state: toAddress.state,
           zip: toAddress.zip,
           country: toAddress.country,
           phone: toAddress.phone || '9178631395',
           email: toAddress.email,
+          isResidential: true,
         },
         parcels: [
           {
             length: parcel.length.toString(),
             width: parcel.width.toString(),
             height: parcel.height.toString(),
-            distance_unit: 'in',
+            distanceUnit: 'in',
             weight: parcel.weight.toString(),
             mass_unit: 'lb',
           },
