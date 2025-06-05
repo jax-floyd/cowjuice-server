@@ -48,12 +48,16 @@ const setupGetRatesShippo = (router) => {
 
     try {
       const response = await shippo.post('/shipments', shipmentPayload);
-      console.log('✅ Shippo shipment created:', response.data.object_id);
+      const shipmentId = response.data.object_id;
 
-      res.json({
-        rates: response.data.rates,
-        shipment_id: response.data.object_id,
-      });
+      console.log('✅ Shippo shipment created:', shipmentId);
+
+      const ratesWithShipmentId = response.data.rates.map(rate => ({
+        ...rate,
+        shipment_id: shipmentId,
+      }));
+
+      res.json({ rates: ratesWithShipmentId });
     } catch (err) {
       console.error(
         '❌ Shippo Get Rates Error:',
