@@ -25,8 +25,11 @@ const setupSaveBetaAcessRequest = require('./beta/saveBetaAccessRequest.js');
 const setupGetBetaTesters = require('./beta/getBetaTesters.js');
 const setupDispositionBetaAccessRequest = require('./beta/dispositionBetaAccessRequest.js');
 
-const setupGetRates = require('./easypost/getRates.js');
-const setupBuyLabel = require('./easypost/buyLabel.js');
+const setupEasypostGetRates = require('./easypost/getRates.js');
+const setupEasypostBuyLabel = require('./easypost/buyLabel.js');
+
+const setupShippoGetRates = require('./shippo/getRates.js');
+// const setupShippoBuyLabel = require('./shippo/buyLabel.js');
 
 const router = express.Router();
 
@@ -56,9 +59,12 @@ const setupRoutes = ( app ) => {
   setupGetBetaTesters(router);
   setupDispositionBetaAccessRequest(router);
 
-  setupGetRates(router);
-  setupBuyLabel(router);
+  setupEasypostGetRates(router);
+  setupEasypostBuyLabel(router);
 
+  setupShippoGetRates(router);
+  // setupShippoBuyLabel(router);
+  
   return router;
 };
 
