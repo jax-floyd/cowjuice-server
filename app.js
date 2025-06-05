@@ -27,12 +27,10 @@ app.use(cors({
         }
     },
     methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type', 'Authorization']
-
+    allowedHeaders: ['Content-Type', 'Authorization', 'cow-juice-api-key'],
 }));
 
 app.use(checkApiKey); // <-- Enforces API key globally
-
 
 // We create an HTTPS server instance, instead of our traditional HTTP server
 const server = https.createServer(httpsOptions, app);
