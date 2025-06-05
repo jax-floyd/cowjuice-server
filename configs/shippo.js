@@ -9,4 +9,6 @@ const shippo = new Shippo({
   shippoApiVersion: '2018-02-08',
 });
 
+console.log('Shippo initialized with API key:');
+
 module.exports = shippo;
