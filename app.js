@@ -27,7 +27,7 @@ app.use(cors({
         }
     },
     methods: ['GET', 'POST'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Cow-Juice-Api-Key'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'cow-juice-api-key'],
 }));
 
 app.use(checkApiKey); // <-- Enforces API key globally
