@@ -1,7 +1,7 @@
 require('../configs/loadEnv')(); // or dotenv.config()
 
 const checkApiKey = (req, res, next) => {
-  const key = req.headers['cow-juice-api-key'];
+  const key = req.headers['Cow-Juice-Api-Key']
   if (!key || key !== process.env.COWJUICE_API_KEY) {
     return res.status(403).json({ error: 'Forbidden, like the applesauce: Invalid or missing API key' });
   }
