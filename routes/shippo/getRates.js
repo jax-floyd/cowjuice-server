@@ -10,7 +10,7 @@ const setupGetRatesShippo = (router) => {
       const shipment = await shippo.shipments.create({
         addressFrom: {
           name: 'Planet Milk',
-          company : 'Cow Juice Inc.',
+          company: 'Cow Juice Inc.',
           street1: '334 W 86 St',
           street3: 'Apt 1',
           city: 'New York',
@@ -19,7 +19,8 @@ const setupGetRatesShippo = (router) => {
           country: 'US',
           phone: '9178631395',
           email: 'cowjuiceman@gotcowjuice.com',
-        },      
+          isResidential: false,
+        },
         addressTo: {
           name: toAddress.name,
           street1: toAddress.street1,
@@ -39,20 +40,21 @@ const setupGetRatesShippo = (router) => {
             height: parcel.height.toString(),
             distanceUnit: 'in',
             weight: parcel.weight.toString(),
-            mass_unit: 'lb',
+            massUnit: 'oz', // ✅ CORRECTED camelCase
           },
         ],
         async: false,
+        metadata: 'Compare rates for Cow Juice',
       });
 
-      console.log('Shippo Shipment Created:', shipment);
+      console.log('✅ Shippo shipment created:', shipment.object_id);
 
       res.json({
         rates: shipment.rates,
         shipment_id: shipment.object_id,
       });
     } catch (err) {
-      console.error('Shippo Get Rates Error:', err.response?.data || err.message || err);
+      console.error('❌ Shippo Get Rates Error:', err?.response?.data || err.message || err);
       res.status(500).json({ error: 'Failed to fetch shipping rates via Shippo' });
     }
   });
