@@ -1,8 +1,8 @@
 const easypost = require('../../configs/easypost');
 
 const setupBuyLabel = (router) => {
-  router.post('/admin/buy-label', async (req, res) => {
-    console.log("'/admin/buy-label' endpoint was reached.");
+  router.post('/admin/easypost/buy-label', async (req, res) => {
+    console.log("'/admin/easypost/buy-label' endpoint was reached.");
 
     const { shipmentId, rateId } = req.body;
 

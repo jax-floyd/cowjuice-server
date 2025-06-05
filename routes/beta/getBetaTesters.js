@@ -9,7 +9,7 @@ const setupGetBetaTesters = (router) => {
     console.log("'/get-beta-testers' endpoint was reached.");
 
     try {
-      const { page = 1, limit = 25, status, username } = req.query;
+      const { page = 1, limit = 500, status, username } = req.query;
       const pageNum = parseInt(page, 10);
       const limitNum = parseInt(limit, 10);
 

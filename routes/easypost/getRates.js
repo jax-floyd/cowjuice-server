@@ -1,8 +1,8 @@
 const easypost = require('../../configs/easypost');
 
 const setupGetRates = (router) => {
-  router.post('/admin/get-rates', async (req, res) => {
-    console.log("'/admin/get-rates' endpoint was reached.");
+  router.post('/admin/easypost/get-rates', async (req, res) => {
+    console.log("'/admin/easypost/get-rates' endpoint was reached.");
 
     const { toAddress, parcel } = req.body;
 
