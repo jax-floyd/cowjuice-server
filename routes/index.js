@@ -29,7 +29,7 @@ const setupEasypostGetRates = require('./easypost/getRates.js');
 const setupEasypostBuyLabel = require('./easypost/buyLabel.js');
 
 const setupShippoGetRates = require('./shippo/getRates.js');
-// const setupShippoBuyLabel = require('./shippo/buyLabel.js');
+const setupShippoBuyLabel = require('./shippo/buyLabel.js');
 
 const router = express.Router();
 
@@ -63,8 +63,8 @@ const setupRoutes = ( app ) => {
   setupEasypostBuyLabel(router);
 
   setupShippoGetRates(router);
-  // setupShippoBuyLabel(router);
-  
+  setupShippoBuyLabel(router);
+
   return router;
 };
 
