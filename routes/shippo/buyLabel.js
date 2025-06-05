@@ -5,6 +5,7 @@ const setupBuyLabelShippo = (router) => {
     console.log("'/admin/shippo/buy-label' endpoint was reached.");
 
     const { shipmentId, rateId } = req.body;
+    console.log('Buy Shippo Label Request body:', req.body);
 
     if (!shipmentId || !rateId) {
       return res.status(400).json({ error: 'Missing shipmentId or rateId' });
@@ -18,6 +19,7 @@ const setupBuyLabelShippo = (router) => {
       });
 
       const transaction = transactionRes.data;
+        console.log('✅ Shippo transaction created:', transaction);
 
       if (transaction.status !== 'SUCCESS') {
         return res.status(500).json({
