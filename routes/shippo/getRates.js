@@ -41,6 +41,8 @@ const setupGetRatesShippo = (router) => {
         async: false,
       });
 
+      console.log('Shippo Shipment Created:', shipment);
+
       res.json({
         rates: shipment.rates,
         shipment_id: shipment.object_id,
