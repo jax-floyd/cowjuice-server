@@ -14,7 +14,6 @@ const httpsOptions = {
 
 const app = express();
 app.use(express.json());
-app.use(checkApiKey); // <-- Enforces API key globally
 
 // We define a function to map over the list of allowed CORS origins
 const allowedOrigins = ['http://localhost:3000', 'http://localhost:3001', 'https://gotcowjuice.com', 'https://cow-juice-development.web.app', '', 'https://admin.gotcowjuice.com'];
@@ -31,6 +30,9 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization']
 
 }));
+
+app.use(checkApiKey); // <-- Enforces API key globally
+
 
 // We create an HTTPS server instance, instead of our traditional HTTP server
 const server = https.createServer(httpsOptions, app);
