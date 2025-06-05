@@ -12,6 +12,8 @@ const shippo = new Shippo({
   shippoApiVersion: '2018-02-08',
 });
 
+console.log(shippo);
+
 const setupGetRatesShippo = (router) => {
   router.post('/admin/shippo/get-rates', async (req, res) => {
     console.log("'/admin/shippo/get-rates' endpoint was reached.");
