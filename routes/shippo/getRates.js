@@ -1,5 +1,7 @@
 const shippo = require('../../configs/shippo');
 
+console.log(shippo);
+
 const setupGetRatesShippo = (router) => {
   router.post('/admin/shippo/get-rates', async (req, res) => {
     console.log("'/admin/shippo/get-rates' endpoint was reached.");
