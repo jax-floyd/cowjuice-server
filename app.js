@@ -5,11 +5,15 @@ const cors = require('cors');
 const setupRoutes = require('./routes/index.js');
 const checkApiKey = require('./middleware/checkApiKey');
 
+require('./configs/loadEnv')(); // or dotenv.config()
+
+console.log(`./keys/ssl/${process.env.NODE_ENV === 'production' ? 'prod' : 'dev'}/ca_bundle.crt`);
+
 // We read the SSL certificate and private key from `keys` directory
 const httpsOptions = {
-    ca: fs.readFileSync("./keys/ssl/ca_bundle.crt"),
-    key: fs.readFileSync("./keys/ssl/private.key"),
-    cert: fs.readFileSync("./keys/ssl/certificate.crt")
+    ca: fs.readFileSync(`./keys/ssl/${process.env.NODE_ENV === 'production' ? 'prod' : 'dev'}/ca_bundle.crt`),
+    key: fs.readFileSync(`./keys/ssl/${process.env.NODE_ENV === 'production' ? 'prod' : 'dev'}/private.key`),
+    cert: fs.readFileSync(`./keys/ssl/${process.env.NODE_ENV === 'production' ? 'prod' : 'dev'}/certificate.crt`)
 };
 
 const app = express();
