@@ -14,7 +14,7 @@ const setupBuyLabelShippo = (router) => {
     try {
       const transactionRes = await shippo.post('/transactions', {
         rate: rateId,
-        label_file_type: 'PDF',
+        label_file_type: 'PNG',
         async: false,
       });
 
